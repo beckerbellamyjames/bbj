@@ -30,22 +30,22 @@
 
     /* Wavekit Playlist Container */
     .wavekit-embed-box {
-      margin-bottom: 20px;
+      margin-bottom: 24px;
       border-radius: 8px;
       overflow: hidden;
       background: var(--card-bg);
       border: 1px solid var(--border-color);
-      min-height: 380px;
+      height: 371px;
     }
 
     .wavekit-embed-box iframe {
       width: 100%;
-      height: 380px;
+      height: 371px;
       border: none;
       display: block;
     }
 
-    /* Custom Tracklist items */
+    /* Custom Tracklist */
     .track-list {
       display: flex;
       flex-direction: column;
@@ -95,4 +95,316 @@
       font-weight: bold;
       cursor: pointer;
       text-decoration: none;
-      transition: background
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    .btn:hover {
+      background-color: var(--accent-color);
+      color: var(--bg-color);
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background-color: #f5f5dc;
+      color: #3e2f1c;
+      border-radius: 8px;
+      max-width: 480px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+      padding: 24px;
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      background: none;
+      border: none;
+      color: #3e2f1c;
+      font-size: 1.5rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .lyric-text {
+      white-space: pre-line;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    .disc-text {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .disc-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .btn-purchase {
+      background: #3e2f1c;
+      color: #f5f5dc;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      font-weight: bold;
+      text-decoration: none;
+      flex: 1;
+      text-align: center;
+    }
+
+    .btn-cancel {
+      background: transparent;
+      color: #3e2f1c;
+      border: 1px solid #3e2f1c;
+      padding: 10px 20px;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="album-container">
+
+    <!-- Active Wavekit Playlist Frame -->
+    <div class="wavekit-embed-box">
+      <iframe src="https://play.wavekit.app/embed/playlist/J8w08NCXui?type=wave&border=false&theme=dark&accentLight=black&accentDark=white" allowtransparency="true" style="border: none;" width="100%" height="371px" referrerpolicy="origin" title="Wavekit audio player"></iframe>
+    </div>
+
+    <!-- Track List Controls -->
+    <div class="track-list">
+
+      <div class="track-card">
+        <div class="track-info">
+          <p class="track-title">Don't Know Who I Am</p>
+          <p class="track-artist">Becker, Bellamy &amp; James</p>
+        </div>
+        <div class="track-actions">
+          <button class="btn" onclick="openModal('lyrics-1')">LYRICS</button>
+          <button class="btn" onclick="openModal('buy-modal')">BUY</button>
+        </div>
+      </div>
+
+      <div class="track-card">
+        <div class="track-info">
+          <p class="track-title">Baby, I Hold On</p>
+          <p class="track-artist">Becker, Bellamy &amp; James</p>
+        </div>
+        <div class="track-actions">
+          <button class="btn" onclick="openModal('lyrics-2')">LYRICS</button>
+          <button class="btn" onclick="openModal('buy-modal')">BUY</button>
+        </div>
+      </div>
+
+      <div class="track-card">
+        <div class="track-info">
+          <p class="track-title">Prayer for the Fallen</p>
+          <p class="track-artist">Becker, Bellamy &amp; James</p>
+        </div>
+        <div class="track-actions">
+          <button class="btn" onclick="openModal('lyrics-3')">LYRICS</button>
+          <button class="btn" onclick="openModal('buy-modal')">BUY</button>
+        </div>
+      </div>
+
+      <div class="track-card">
+        <div class="track-info">
+          <p class="track-title">Home Again</p>
+          <p class="track-artist">Becker, Bellamy &amp; James</p>
+        </div>
+        <div class="track-actions">
+          <button class="btn" onclick="openModal('lyrics-4')">LYRICS</button>
+          <button class="btn" onclick="openModal('buy-modal')">BUY</button>
+        </div>
+      </div>
+
+      <div class="track-card">
+        <div class="track-info">
+          <p class="track-title">Sheltered World</p>
+          <p class="track-artist">Becker, Bellamy &amp; James</p>
+        </div>
+        <div class="track-actions">
+          <button class="btn" onclick="openModal('lyrics-5')">LYRICS</button>
+          <button class="btn" onclick="openModal('buy-modal')">BUY</button>
+        </div>
+      </div>
+
+      <div class="track-card">
+        <div class="track-info">
+          <p class="track-title">The One (Who Got Away)</p>
+          <p class="track-artist">Becker, Bellamy &amp; James</p>
+        </div>
+        <div class="track-actions">
+          <button class="btn" onclick="openModal('lyrics-6')">LYRICS</button>
+          <button class="btn" onclick="openModal('buy-modal')">BUY</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Buy Disclaimer Modal -->
+  <div id="buy-modal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('buy-modal')">&times;</button>
+      <h3 style="margin-top:0; text-align:center;">ABOUT THIS PURCHASE</h3>
+      <div class="disc-text">
+        You are purchasing a song that was 100% human written, with AI-assisted production, including synthetic instruments and vocals.
+        <br><br>
+        Becker, Bellamy &amp; James is a fictitious band. Any resemblance to real persons, living or dead, or actual musical groups is purely coincidental. By clicking BUY, you confirm that you understand and accept these terms.
+      </div>
+      <div class="disc-actions">
+        <a href="https://payhip.com/b/P6cli" target="_blank" rel="noopener" class="btn-purchase">BUY</a>
+        <button onclick="closeModal('buy-modal')" class="btn-cancel">CANCEL</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lyric Modals -->
+  <div id="lyrics-1" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('lyrics-1')">&times;</button>
+      <h3 style="margin-top:0;">DON'T KNOW WHO I AM</h3>
+      <div class="lyric-text">
+To find my way home
+I need the light in your eyes to guide me
+To help me see
+
+But I won't stay long
+I've got the weight of the world inside me
+Won't let me be
+
+You are my holiday, my sweet escape
+Who saves me from the pain
+I need to see your face
+Your warm embrace will bring me home again
+
+I know I never show it
+I smile to save my soul but I don't know who I am
+I don't know who I am anymore
+
+I've tried to grin and bear it
+Be strong and learn to wear it but I don't know who I am
+I don't know who I am anymore
+      </div>
+    </div>
+  </div>
+
+  <div id="lyrics-2" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('lyrics-2')">&times;</button>
+      <h3 style="margin-top:0;">BABY, I HOLD ON</h3>
+      <div class="lyric-text">
+I don't wanna be the one to tell you no
+I don't wanna be the one to let it break down
+But every moment I'm around you I can feel the heat is dissipating
+I don't wanna be the one to let it go
+
+Oh, I remember how I used to make you sigh
+Oh, now you couldn't even fake it if you tried
+
+But baby I hold on
+Yeah baby I hold on
+      </div>
+    </div>
+  </div>
+
+  <div id="lyrics-3" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('lyrics-3')">&times;</button>
+      <h3 style="margin-top:0;">PRAYER FOR THE FALLEN</h3>
+      <div class="lyric-text">
+Here's my prayer
+For the fallen
+Here's my song
+To their gods
+Send them home
+To the meadow
+Don't leave anyone behind at all
+      </div>
+    </div>
+  </div>
+
+  <div id="lyrics-4" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('lyrics-4')">&times;</button>
+      <h3 style="margin-top:0;">HOME AGAIN</h3>
+      <div class="lyric-text">
+There ain't much road ahead
+And too much left behind
+Been wondering 'bout the things I've said
+That might have been unkind
+
+I need to make amends
+Before my time is gone
+I think about how blind I've been
+And the woman I have wronged
+      </div>
+    </div>
+  </div>
+
+  <div id="lyrics-5" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('lyrics-5')">&times;</button>
+      <h3 style="margin-top:0;">SHELTERED WORLD</h3>
+      <div class="lyric-text">
+She don't smile the way she should
+She don't say the things she could
+She don't see herself
+She's disappeared into her sheltered world
+      </div>
+    </div>
+  </div>
+
+  <div id="lyrics-6" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('lyrics-6')">&times;</button>
+      <h3 style="margin-top:0;">THE ONE (Who Got Away)</h3>
+      <div class="lyric-text">
+When I met him on a weary Sunday morning
+I was coming back from working on the line
+He had parked himself beneath the railway awning
+Looking like a relic from some ancient time
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openModal(id) {
+      document.getElementById(id).style.display = 'flex';
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+      if (event.target.classList.contains('modal')) {
+        event.target.style.display = 'none';
+      }
+    }
+  </script>
+
+</body>
+</html>
