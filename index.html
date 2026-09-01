@@ -4,10 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ghost Latitudes - Becker, Bellamy & James</title>
-  
-  <!-- Wavekit Player Core Script -->
-  <!-- Replace the src URL below with your actual Wavekit script tag from your Wavekit dashboard -->
-  <script src="https://wavekit.app/embed.js" async></script>
 
   <style>
     :root {
@@ -24,7 +20,7 @@
       background-color: var(--bg-color);
       color: var(--text-color);
       margin: 0;
-      padding: 20px;
+      padding: 16px;
     }
 
     .album-container {
@@ -32,27 +28,35 @@
       margin: 0 auto;
     }
 
-    /* Wavekit main embed container */
+    /* Wavekit Player Container */
     .wavekit-embed-box {
-      margin-bottom: 25px;
+      margin-bottom: 20px;
       border-radius: 8px;
       overflow: hidden;
       background: var(--card-bg);
       border: 1px solid var(--border-color);
+      min-height: 80px;
+    }
+
+    .wavekit-embed-box iframe {
+      width: 100%;
+      height: 80px;
+      border: none;
+      display: block;
     }
 
     /* Tracklist items */
     .track-list {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
     .track-card {
       background-color: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 8px;
-      padding: 16px;
+      padding: 12px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -64,14 +68,14 @@
     }
 
     .track-title {
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 600;
-      margin: 0 0 4px 0;
+      margin: 0 0 2px 0;
       color: var(--text-color);
     }
 
     .track-artist {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: var(--text-muted);
       margin: 0;
     }
@@ -87,7 +91,8 @@
       color: var(--accent-color);
       padding: 6px 12px;
       border-radius: 4px;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
+      font-weight: bold;
       cursor: pointer;
       text-decoration: none;
       transition: background-color 0.2s, color 0.2s;
@@ -98,7 +103,7 @@
       color: var(--bg-color);
     }
 
-    /* Lyric Modal Popup */
+    /* Shared Modal Styles */
     .modal {
       display: none;
       position: fixed;
@@ -112,33 +117,69 @@
     }
 
     .modal-content {
-      background-color: var(--card-bg);
-      border: 1px solid var(--border-color);
+      background-color: #f5f5dc;
+      color: #3e2f1c;
       border-radius: 8px;
-      max-width: 500px;
+      max-width: 480px;
       width: 100%;
       max-height: 80vh;
       overflow-y: auto;
       padding: 24px;
       position: relative;
+      box-sizing: border-box;
     }
 
     .modal-close {
       position: absolute;
-      top: 12px;
-      right: 16px;
+      top: 10px;
+      right: 14px;
       background: none;
       border: none;
-      color: var(--text-muted);
+      color: #3e2f1c;
       font-size: 1.5rem;
+      font-weight: bold;
       cursor: pointer;
     }
 
     .lyric-text {
-      white-space: pre-wrap;
+      white-space: pre-line;
       line-height: 1.6;
       font-size: 0.95rem;
-      color: var(--text-color);
+    }
+
+    .disc-text {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .disc-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .btn-purchase {
+      background: #3e2f1c;
+      color: #f5f5dc;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      font-weight: bold;
+      text-decoration: none;
+      flex: 1;
+      text-align: center;
+    }
+
+    .btn-cancel {
+      background: transparent;
+      color: #3e2f1c;
+      border: 1px solid #3e2f1c;
+      padding: 10px 20px;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+      flex: 1;
     }
   </style>
 </head>
@@ -146,107 +187,114 @@
 
   <div class="album-container">
 
-    <!-- 1. Wavekit Player Widget -->
     <div class="wavekit-embed-box">
-      <!-- Paste your Wavekit iframe or div container code here -->
-      <div id="wavekit-player-container"></div>
+      <iframe src="https://play.wavekit.app/embed/audio/qCG4sx6gON?type=compact&border=false&theme=dark&accentLight=black&accentDark=white" allowtransparency="true" referrerpolicy="origin" title="Wavekit audio player"></iframe>
     </div>
 
-    <!-- 2. Interactive Tracklist -->
     <div class="track-list">
 
-      <!-- Track 1 -->
       <div class="track-card">
         <div class="track-info">
-          <p class="track-title">1. Don't Know Who I Am</p>
-          <p class="track-artist">Becker, Bellamy & James</p>
+          <p class="track-title">Don't Know Who I Am</p>
+          <p class="track-artist">Becker, Bellamy &amp; James</p>
         </div>
         <div class="track-actions">
-          <button class="btn" onclick="openLyrics('lyrics-track-1')">Lyrics</button>
-          <a href="YOUR_PAYHIP_OR_KOFI_LINK" target="_blank" class="btn">Buy</a>
+          <button class="btn" onclick="openModal('lyrics-1')">LYRICS</button>
+          <button class="btn" onclick="openModal('buy-modal')">BUY</button>
         </div>
       </div>
 
-      <!-- Track 2 -->
       <div class="track-card">
         <div class="track-info">
-          <p class="track-title">2. Ghost Latitudes</p>
-          <p class="track-artist">Becker, Bellamy & James</p>
+          <p class="track-title">Baby, I Hold On</p>
+          <p class="track-artist">Becker, Bellamy &amp; James</p>
         </div>
         <div class="track-actions">
-          <button class="btn" onclick="openLyrics('lyrics-track-2')">Lyrics</button>
-          <a href="YOUR_PAYHIP_OR_KOFI_LINK" target="_blank" class="btn">Buy</a>
+          <button class="btn" onclick="openModal('lyrics-2')">LYRICS</button>
+          <button class="btn" onclick="openModal('buy-modal')">BUY</button>
         </div>
       </div>
 
-      <!-- Track 3 -->
       <div class="track-card">
         <div class="track-info">
-          <p class="track-title">3. Wind Me Up</p>
-          <p class="track-artist">Becker, Bellamy & James</p>
+          <p class="track-title">Prayer for the Fallen</p>
+          <p class="track-artist">Becker, Bellamy &amp; James</p>
         </div>
         <div class="track-actions">
-          <button class="btn" onclick="openLyrics('lyrics-track-3')">Lyrics</button>
-          <a href="YOUR_PAYHIP_OR_KOFI_LINK" target="_blank" class="btn">Buy</a>
+          <button class="btn" onclick="openModal('lyrics-3')">LYRICS</button>
+          <button class="btn" onclick="openModal('buy-modal')">BUY</button>
         </div>
       </div>
 
-      <!-- Add additional tracks by repeating the track-card block above -->
+      <div class="track-card">
+        <div class="track-info">
+          <p class="track-title">Home Again</p>
+          <p class="track-artist">Becker, Bellamy &amp; James</p>
+        </div>
+        <div class="track-actions">
+          <button class="btn" onclick="openModal('lyrics-4')">LYRICS</button>
+          <button class="btn" onclick="openModal('buy-modal')">BUY</button>
+        </div>
+      </div>
+
+      <div class="track-card">
+        <div class="track-info">
+          <p class="track-title">Sheltered World</p>
+          <p class="track-artist">Becker, Bellamy &amp; James</p>
+        </div>
+        <div class="track-actions">
+          <button class="btn" onclick="openModal('lyrics-5')">LYRICS</button>
+          <button class="btn" onclick="openModal('buy-modal')">BUY</button>
+        </div>
+      </div>
+
+      <div class="track-card">
+        <div class="track-info">
+          <p class="track-title">The One (Who Got Away)</p>
+          <p class="track-artist">Becker, Bellamy &amp; James</p>
+        </div>
+        <div class="track-actions">
+          <button class="btn" onclick="openModal('lyrics-6')">LYRICS</button>
+          <button class="btn" onclick="openModal('buy-modal')">BUY</button>
+        </div>
+      </div>
 
     </div>
   </div>
 
-  <!-- 3. Hidden Lyric Modals -->
-
-  <!-- Lyrics Track 1 -->
-  <div id="lyrics-track-1" class="modal">
+  <div id="buy-modal" class="modal">
     <div class="modal-content">
-      <button class="modal-close" onclick="closeLyrics('lyrics-track-1')">&times;</button>
-      <h3>Don't Know Who I Am</h3>
-      <div class="lyric-text">
-Paste your full lyrics for Don't Know Who I Am here...
+      <button class="modal-close" onclick="closeModal('buy-modal')">&times;</button>
+      <h3 style="margin-top:0; text-align:center;">ABOUT THIS PURCHASE</h3>
+      <div class="disc-text">
+        You are purchasing a song that was 100% human written, with AI-assisted production, including synthetic instruments and vocals.
+        <br><br>
+        Becker, Bellamy &amp; James is a fictitious band. Any resemblance to real persons, living or dead, or actual musical groups is purely coincidental. By clicking BUY, you confirm that you understand and accept these terms.
+      </div>
+      <div class="disc-actions">
+        <a href="https://payhip.com/b/P6cli" target="_blank" rel="noopener" class="btn-purchase">BUY</a>
+        <button onclick="closeModal('buy-modal')" class="btn-cancel">CANCEL</button>
       </div>
     </div>
   </div>
 
-  <!-- Lyrics Track 2 -->
-  <div id="lyrics-track-2" class="modal">
+  <div id="lyrics-1" class="modal">
     <div class="modal-content">
-      <button class="modal-close" onclick="closeLyrics('lyrics-track-2')">&times;</button>
-      <h3>Ghost Latitudes</h3>
+      <button class="modal-close" onclick="closeModal('lyrics-1')">&times;</button>
+      <h3 style="margin-top:0;">DON'T KNOW WHO I AM</h3>
       <div class="lyric-text">
-Paste your full lyrics for Ghost Latitudes here...
-      </div>
-    </div>
-  </div>
+To find my way home
+I need the light in your eyes to guide me
+To help me see
 
-  <!-- Lyrics Track 3 -->
-  <div id="lyrics-track-3" class="modal">
-    <div class="modal-content">
-      <button class="modal-close" onclick="closeLyrics('lyrics-track-3')">&times;</button>
-      <h3>Wind Me Up</h3>
-      <div class="lyric-text">
-Paste your full lyrics for Wind Me Up here...
-      </div>
-    </div>
-  </div>
+But I won't stay long
+I've got the weight of the world inside me
+Won't let me be
 
-  <script>
-    function openLyrics(modalId) {
-      document.getElementById(modalId).style.display = 'flex';
-    }
+You are my holiday, my sweet escape
+Who saves me from the pain
+I need to see your face
+Your warm embrace will bring me home again
 
-    function closeLyrics(modalId) {
-      document.getElementById(modalId).style.display = 'none';
-    }
-
-    // Close modal if user clicks outside the content box
-    window.onclick = function(event) {
-      if (event.target.classList.contains('modal')) {
-        event.target.style.display = 'none';
-      }
-    }
-  </script>
-
-</body>
-</html>
+I know I never show it
+I smile to save my soul
